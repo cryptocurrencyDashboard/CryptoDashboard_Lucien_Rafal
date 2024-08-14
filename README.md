@@ -20,3 +20,6 @@
 
 **4. Run the program**
 - on the project root directory. run in terminal `python3 backend/main.py`
+
+**5.Before push your code to github**
+- run `pip3 freeze > requirements.txt` to update requirements.txt file (so your new added dependencies are in the files"
