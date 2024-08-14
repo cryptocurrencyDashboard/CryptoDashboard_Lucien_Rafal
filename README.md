@@ -23,3 +23,19 @@
 
 **5.Before push your code to github**
 - run `pip3 freeze > requirements.txt` to update requirements.txt file (so your new added dependencies are in the files"
+
+
+## Backend EndPoint
+
+
+| endPoint       | type   | table used                         | details                                                                                    |
+| -------------- | ------ | ---------------------------------- | ------------------------------------------------------------------------------------------ |
+| /user/register | POST   | User                               | user enter the username, password...etc                                                    |
+| /user/edit     | PUT    | User                               | edit the user information                                                                  |
+| /user/edit     | DELETE | User                               | delete user                                                                                |
+| /user          | GET    | User                               | get all the user                                                                           |
+| /trade         | POST   | Transaction, Holding, Crypto, User | Enter coin, type of trade amount to create the transaction. Result will be save to Holding |
+| /portfolio     | GET    | Holding                            | Get the current holding                                                                    |
+
+
+
