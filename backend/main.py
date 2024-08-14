@@ -9,7 +9,6 @@ from sqlalchemy import create_engine  # Import the create_engine function
 
 load_dotenv()
 
-
 api_key = os.getenv("BINANCE_API_KEY")
 api_secret = os.getenv("BINANCE_SECRET_KEY")
 username = os.getenv("MYSQL_USERNAME")
@@ -19,12 +18,10 @@ password = os.getenv("MYSQL_PASSWORD")
 
 client = Client(api_key, api_secret)
 
-
 coins = ('BTCUSDT', 'ETHUSDT', 'BNBUSDT', 'SOLUSDT', 'ADAUSDT', 'XRPUSDT', 
          'DOTUSDT', 'LUNAUSDT', 'DOGEUSDT', 'AVAXUSDT', 'SHIBUSDT', 
          'MATICUSDT', 'LTCUSDT', 'UNIUSDT', 'ALGOUSDT', 'TRXUSDT', 
          'LINKUSDT', 'MANAUSDT', 'ATOMUSDT', 'VETUSDT')
-
 
 # Fetch current prices from Binance
 prices = []
@@ -36,6 +33,7 @@ for coin in coins:
     })
 
 # Create a DataFrame with the current prices
+
 df = pd.DataFrame(prices)
 
 # Add the name and crypto_id manually or programmatically
