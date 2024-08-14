@@ -1,10 +1,9 @@
-
-
 from dotenv import load_dotenv
 import os 
 from binance.client import Client
 import pandas as pd
-
+from sqlalchemy import create_engine  # Import the create_engine function
+#import cryptography
 
 
 
@@ -13,7 +12,8 @@ load_dotenv()
 
 api_key = os.getenv("BINANCE_API_KEY")
 api_secret = os.getenv("BINANCE_SECRET_KEY")
-
+username = os.getenv("MYSQL_USERNAME")
+password = os.getenv("MYSQL_PASSWORD")
 
 
 
@@ -47,7 +47,12 @@ df['name'] = ['Bitcoin', 'Ethereum', 'Binance Coin', 'Solana', 'Cardano', 'XRP',
 
 # Reorder the DataFrame columns
 df = df[['crypto_id', 'symbol', 'name', 'current_price']]
+# Database connection string 
+DATABASE_URL = f"mysql+pymysql://{username}:{password}@localhost/crypto_data"
+engine = create_engine(DATABASE_URL)
 
+df.to_sql('crypto_prices', con=engine, if_exists='replace', index=False)
+# Create the engine
 print(df)  # Display the DataFrame to verify the data
 
 
