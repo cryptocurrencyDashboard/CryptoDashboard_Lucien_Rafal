@@ -1,7 +1,8 @@
 ## How to start 
 
 -  pull this github repo to your local machine `git clone https://github.com/cryptocurrencyDashboard/CryptoDashboard_Lucien_Rafal.git`
-**Set up Environemnt on VS code **
+   
+**Set up Environemnt on VS code**
 -  Open it with Visual Studio Code. (terminal need to be in the project root directory).  Set up the enviornment `python3 -m venv venv`
 -  VS studio code will prompt if you want to create a venv2934 file. click `yes`
 -  Activate the environment `source venv/bin/activate`
