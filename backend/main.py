@@ -66,6 +66,19 @@ CREATE TABLE IF NOT EXISTS user (
 );
 """
 
+create_trade_table = """
+CREATE TABLE IF NOT EXISTS trade (
+    user_id INT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(50) NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    email VARCHAR(100),
+    created_at DATETIME
+);
+"""
+
+
+
+
 with engine.connect() as connection:
     connection.execute(text(create_table_query))
     connection.execute(text(create_user_table))
@@ -90,6 +103,15 @@ def create_user():
     insertData(username, password, email)
     print(data)
     return "data added",200
+
+
+
+
+
+
+
+
+
 
 
 # ----- rafal code 
