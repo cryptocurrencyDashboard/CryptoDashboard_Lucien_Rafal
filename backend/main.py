@@ -4,6 +4,7 @@ from binance.client import Client
 import pandas as pd
 from sqlalchemy import create_engine, text   # Import the create_engine function
 from sqlalchemy.orm import sessionmaker
+from flask import Flask,jsonify,request
 
 #------------------------------------------
 #.env setup 
@@ -14,6 +15,8 @@ username = os.getenv("MYSQL_USERNAME")
 password = os.getenv("MYSQL_PASSWORD")
 
 client = Client(api_key, api_secret)
+app = Flask(__name__)
+
 
 
 #------------------------------------------
@@ -40,6 +43,8 @@ df = df[['symbol', 'name', 'current_price']]
 # Database connection string 
 DATABASE_URL = f"mysql+pymysql://{username}:{password}@localhost/crypto_data"
 engine = create_engine(DATABASE_URL)
+Session = sessionmaker(bind=engine)
+session = Session()
 
 
 # SQLAchemy inject "crypto_prices" table to database
@@ -64,11 +69,41 @@ CREATE TABLE IF NOT EXISTS user (
 with engine.connect() as connection:
     connection.execute(text(create_table_query))
     connection.execute(text(create_user_table))
+    
 df.to_sql('crypto_prices', con=engine, if_exists='append', index=False)
 
 
 
+def insertData(name, password, email):
+   
+    sql_query = text("INSERT INTO user (username, password, email) VALUES (:username, :password, :email)")
+    session.execute(sql_query, {"username": name, "password": password, "email": email})
+    session.commit()
+    print("User successfully added")
+
+@app.route("/user/register", methods=["POST"])
+def create_user():
+    data = request.get_json()
+    username = data.get("username") 
+    password = data.get("password") 
+    email = data.get("email")
+    insertData(username, password, email)
+    print(data)
+    return "data added",200
 
 
+# ----- rafal code 
+
+
+
+#-----
+
+
+
+
+
+app.run()
+
+session.close()
 print(df) 
 
