@@ -45,3 +45,5 @@
 ## User Story
 
 ## Trigger
+## .env example 
+## endpoint result and parameters (check other api documentation sample)
