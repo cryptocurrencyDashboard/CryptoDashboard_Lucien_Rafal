@@ -38,6 +38,7 @@
 | /portfolio     | GET    | portfolio                            | Get the current holding                                                                    |
 
 
-<img width="671" alt="Screenshot 2024-08-12 at 22 21 14 1" src="https://github.com/user-attachments/assets/4cdc9c80-d53e-4f64-9269-c69203dd6c28">
+
+<img width="750" alt="Screenshot 2024-08-15 at 22 24 24" src="https://github.com/user-attachments/assets/feec6d6e-1062-4030-ac70-d8b5495a9d12">
 
 
