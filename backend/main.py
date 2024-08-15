@@ -41,6 +41,7 @@ df = df[['symbol', 'name', 'current_price']]
 DATABASE_URL = f"mysql+pymysql://{username}:{password}@localhost/crypto_data"
 engine = create_engine(DATABASE_URL)
 
+
 # SQLAchemy inject "crypto_prices" table to database
 create_table_query = """
 CREATE TABLE IF NOT EXISTS crypto_prices (
@@ -50,8 +51,19 @@ CREATE TABLE IF NOT EXISTS crypto_prices (
     current_price DECIMAL(15, 8)
 );
 """
+create_user_table = """
+CREATE TABLE IF NOT EXISTS user (
+    user_id INT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(50) NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    email VARCHAR(100),
+    created_at DATETIME
+);
+"""
+
 with engine.connect() as connection:
     connection.execute(text(create_table_query))
+    connection.execute(text(create_user_table))
 df.to_sql('crypto_prices', con=engine, if_exists='append', index=False)
 
 
