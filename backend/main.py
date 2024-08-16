@@ -94,12 +94,50 @@ def create_user():
 
 # ----- rafal code 
 
+@app.route("/user/update/<int:id>/", methods=["PUT"])
+def update_user_by_id(id):
+    data = request.get_json()
+    
+    # Check if user exists
+    existing_user = session.execute(
+        text("SELECT * FROM user WHERE user_id=:id"),
+        {"id": id}
+    ).fetchone()
+    
+    if not existing_user:
+        return jsonify({"error": "User not found"}), 404
+
+    # Build the update query dynamically based on the provided fields
+    update_fields = []
+    update_values = {"id": id}
+
+    if "username" in data:
+        update_fields.append("username=:username")
+        update_values["username"] = data["username"]
+    
+    if "password" in data:
+        update_fields.append("password=:password")
+        update_values["password"] = data["password"]
+
+    if "email" in data:
+        update_fields.append("email=:email")
+        update_values["email"] = data["email"]
+
+    if not update_fields:
+        return jsonify({"error": "No valid fields to update"}), 400
+
+    update_query = text(
+        f"UPDATE user SET {', '.join(update_fields)} WHERE user_id=:id"
+    )
+    
+    session.execute(update_query, update_values)
+    session.commit()
+    
+    return jsonify({"message": "User data updated successfully"}), 200
+
 
 
 #-----
-
-
-
 
 
 app.run()
