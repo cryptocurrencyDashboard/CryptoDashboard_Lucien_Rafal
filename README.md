@@ -34,10 +34,16 @@
 | /user/edit     | PUT    | User                               | edit the user information                                                                  |
 | /user/edit     | DELETE | User                               | delete user                                                                                |
 | /user          | GET    | User                               | get all the user                                                                           |
-| /trade         | POST   | Transaction, Holding, Crypto, User | Enter coin, type of trade amount to create the transaction. Result will be save to Holding |
-| /portfolio     | GET    | Holding                            | Get the current holding                                                                    |
+| /trade         | POST   | transactions, portfolio, crypto_price, User | Enter coin, type of trade amount to create the transaction. Result will be save to Holding |
+| /portfolio     | GET    | portfolio                            | Get the current holding                                                                    |
 
 
-<img width="671" alt="Screenshot 2024-08-12 at 22 21 14 1" src="https://github.com/user-attachments/assets/4cdc9c80-d53e-4f64-9269-c69203dd6c28">
+
+<img width="750" alt="Screenshot 2024-08-15 at 22 24 24" src="https://github.com/user-attachments/assets/feec6d6e-1062-4030-ac70-d8b5495a9d12">
 
 
+## User Story
+
+## Trigger
+## .env example 
+## endpoint result and parameters (check other api documentation sample)
