@@ -249,24 +249,6 @@ def create_user():
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-# ----- rafal code 
-
 @app.route("/user/update/<int:id>/", methods=["PUT"])
 def update_user_by_id(id):
     data = request.get_json()
@@ -308,10 +290,49 @@ def update_user_by_id(id):
     
     return jsonify({"message": "User data updated successfully"}), 200
 
+#-----
+# ----- rafal code 16.08
+@app.route("/user/delete/<int:id>/", methods=["DELETE"])
+def delete_user_by_id(id):
+    # Check if user exists
+    existing_user = session.execute(
+        text("SELECT * FROM user WHERE user_id=:id"),
+        {"id": id}
+    ).fetchone()
+    
+    if not existing_user:
+        return jsonify({"error": "User not found"}), 404
+
+    # Delete the user
+    delete_query = text("DELETE FROM user WHERE user_id=:id")
+    session.execute(delete_query, {"id": id})
+    session.commit()
+    
+    return jsonify({"message": "User deleted successfully"}), 200
+
+@app.route("/user/<int:id>/", methods=["GET"])
+def get_user_by_id(id):
+    # Check if user exists
+    existing_user = session.execute(
+        text("SELECT * FROM user WHERE user_id=:id"),
+        {"id": id}
+    ).fetchone()
+    
+    if not existing_user:
+        return jsonify({"error": "User not found"}), 404
+
+    # Extract user data
+    user_data = {
+        "id": existing_user.user_id,
+        "username": existing_user.username,
+        "email": existing_user.email,
+        # Add other relevant fields if necessary
+    }
+
+    return jsonify(user_data), 200
 
 
 #-----
-
 
 app.run()
 
