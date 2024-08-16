@@ -31,8 +31,8 @@
 | endPoint       | type   | table used                         | details                                                                                    |
 | -------------- | ------ | ---------------------------------- | ------------------------------------------------------------------------------------------ |
 | /user/register | POST   | User                               | user enter the username, password...etc                                                    |
-| /user/edit     | PUT    | User                               | edit the user information                                                                  |
-| /user/edit     | DELETE | User                               | delete user                                                                                |
+| /user/edit/{id}     | PUT    | User                               | edit the user information                                                                  |
+| /user/edit/{id}     | DELETE | User                               | delete user                                                                                |
 | /user          | GET    | User                               | get all the user                                                                           |
 | /trade         | POST   | transactions, portfolio, crypto_price, User | Enter coin, type of trade amount to create the transaction. Result will be save to Holding |
 | /portfolio     | GET    | portfolio                            | Get the current holding                                                                    |
