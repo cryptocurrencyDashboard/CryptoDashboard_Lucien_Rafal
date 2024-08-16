@@ -212,33 +212,33 @@ def insertData(name, password, email):
 
 @app.route("/user/register", methods=["POST"])
 def create_user():
-    # """
-    # Register a new user
-    # ---
-    # tags:
-    #   - User
-    # parameters:
-    #   - in: body
-    #     name: body
-    #     schema:
-    #       id: User
-    #       required:
-    #         - username
-    #         - password
-    #         - email
-    #       properties:
-    #         username:
-    #           type: string
-    #         password:
-    #           type: string
-    #         email:
-    #           type: string
-    # responses:
-    #   200:
-    #     description: User successfully registered
-    #   400:
-    #     description: Invalid input
-    # """
+    """
+    Register a new user
+    ---
+    tags:
+      - User
+    parameters:
+      - in: body
+        name: body
+        schema:
+          id: User
+          required:
+            - username
+            - password
+            - email
+          properties:
+            username:
+              type: string
+            password:
+              type: string
+            email:
+              type: string
+    responses:
+      200:
+        description: User successfully registered
+      400:
+        description: Invalid input
+    """
     data = request.get_json()
     username = data.get("username") 
     password = data.get("password") 
@@ -251,6 +251,62 @@ def create_user():
 
 @app.route("/user/update/<int:id>/", methods=["PUT"])
 def update_user_by_id(id):
+    """
+    Update user information by ID
+    ---
+    tags:
+      - User
+    parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        description: The ID of the user to update
+      - in: body
+        name: body
+        schema:
+          id: UserUpdate
+          properties:
+            username:
+              type: string
+              description: The new username for the user
+              example: new_username
+            password:
+              type: string
+              description: The new password for the user
+              example: new_password123
+            email:
+              type: string
+              description: The new email for the user
+              example: user@example.com
+          description: User data to update. You can provide any combination of username, password, and email.
+    responses:
+      200:
+        description: User data updated successfully
+        schema:
+          type: object
+          properties:
+            message:
+              type: string
+              example: User data updated successfully
+      400:
+        description: No valid fields to update or Invalid input
+        schema:
+          type: object
+          properties:
+            error:
+              type: string
+              example: No valid fields to update
+      404:
+        description: User not found
+        schema:
+          type: object
+          properties:
+            error:
+              type: string
+              example: User not found
+    """
     data = request.get_json()
     
     # Check if user exists
