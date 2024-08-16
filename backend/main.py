@@ -5,6 +5,7 @@ import pandas as pd
 from sqlalchemy import create_engine, text   # Import the create_engine function
 from sqlalchemy.orm import sessionmaker
 from flask import Flask,jsonify,request
+from flasgger import Swagger
 import pymysql
 
 #--------------------------------------------------------------------------------------------------------------------
@@ -17,7 +18,7 @@ password = os.getenv("MYSQL_PASSWORD")
 
 client = Client(api_key, api_secret)
 app = Flask(__name__)
-
+swagger = Swagger(app)
 
 
 #--------------------------------------------------------------------------------------------------------------------
@@ -211,6 +212,33 @@ def insertData(name, password, email):
 
 @app.route("/user/register", methods=["POST"])
 def create_user():
+    """
+    Register a new user
+    ---
+    tags:
+      - User
+    parameters:
+      - in: body
+        name: body
+        schema:
+          id: User
+          required:
+            - username
+            - password
+            - email
+          properties:
+            username:
+              type: string
+            password:
+              type: string
+            email:
+              type: string
+    responses:
+      200:
+        description: User successfully registered
+      400:
+        description: Invalid input
+    """
     data = request.get_json()
     username = data.get("username") 
     password = data.get("password") 
