@@ -13,9 +13,11 @@
 - once environment activated, install all dependancies mentioned in `requirement.txt` by running ` pip3 install -r requirements.txt`
 - You should now have `venv` folder in your root directory
 
-**3. Add `.env` file to store apikey and apisecret**
-- on your project root directory. create a file and name it `.env`
-- paste the binance api-key and secret (i can pass you the format in private)
+**3. Set up environment creditial: Copy`.env_example ` to `.env` file to store apikey and apisecret**
+
+
+- on your project root director, Copy `.env_example` to `.env`.
+-  Fill in your own credentials in the `.env` file.
 - **Important**: The api-key and secret should NEVER upload to the github or commit. it can only exist in your local environment.  To ensure apikey doesn't upload to github. you should see an `.gitignore` file on your root directory.  Everything mentioned in this file WON"T be upload to github nor in git commit history.  so if you see `.env` written in the `.gitignore` file then you are safe 
 
 **4. Run the program**
@@ -27,7 +29,6 @@
 
 ## Backend EndPoint
 
-
 | endPoint       | type   | table used                         | details                                                                                    |
 | -------------- | ------ | ---------------------------------- | ------------------------------------------------------------------------------------------ |
 | /user/register | POST   | User                               | user enter the username, password...etc                                                    |
@@ -35,7 +36,8 @@
 | /user/delete/{id}     | DELETE | User                               | delete user                                                                                |
 | /user          | GET    | User                               | get all the user                                                                           |
 | /transactions         | POST   | transactions, portfolio, crypto_price, User | Enter coin, type of trade amount to create the transaction. Result will be save to Holding |
-| /portfolio     | GET    | portfolio                            | Get the current holding                                                                    |
+| /transaction/{id} |GET    |transactions, crypto_price | user can view their transaction history |
+| /portfolio     | GET    | portfolio, crypto_price, user                           | Get the current holding                                                                    |
 
 
 
@@ -45,5 +47,5 @@
 ## User Story
 
 ## Trigger
-## .env example 
+
 ## endpoint result and parameters (check other api documentation sample)
