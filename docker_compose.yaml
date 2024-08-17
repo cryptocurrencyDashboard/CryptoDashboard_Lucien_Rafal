@@ -3,25 +3,32 @@ version: "3.8"
 services:
   db:
     image: mysql:8.0
+    container_name: python_app_container
     environment:
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
-      MYSQL_USER: ${MYSQL_USER}
-      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_DATABASE: crypto_data
     volumes:
       - mysql_data:/var/lib/mysql
-    ports:
-      - "3306:3306"
+    networks: -backend
 
   web:
     build: .
     environment:
-      BINANCE_API_KEY: ${BINANCE_API_KEY}
-      BINANCE_SECRET_KEY: ${BINANCE_SECRET_KEY}
-      DATABASE_URL: mysql+pymysql://${MYSQL_USER}:${MYSQL_PASSWORD}@db:3306/crypto_db
+      - BINANCE_API_KEY=${BINANCE_API_KEY}
+      - BINANCE_SECRET_KEY=${BINANCE_SECRET_KEY}
+      - MYSQL_USERNAME=${MYSQL_USERNAME}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+    volumes:
+      - .:/app
     ports:
       - "5000:5000"
     depends_on:
-      - db
+      - mysql
+    networks:
+      - backend
+
+networks:
+  backend:
 
 volumes:
   mysql_data:
