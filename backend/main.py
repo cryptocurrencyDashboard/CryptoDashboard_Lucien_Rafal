@@ -388,6 +388,28 @@ def get_user_by_id(id):
     return jsonify(user_data), 200
 
 
+
+@app.route("/transactions/", methods=["POST"])
+def coin_transactions():
+  
+    data = request.get_json()
+
+    user_id = data.get("user_id") 
+    crypto_id = data.get("crypto_id") 
+    transaction_type = data.get("transaction_type") 
+    amount = data.get("amount") 
+
+    
+    transaction_query = text("INSERT INTO transactions (user_id, crypto_id, transaction_type, amount) VALUES (:user_id, :crypto_id, :transaction_type, :amount)"
+  
+    )
+  
+    session.execute(transaction_query, {"user_id": user_id , "crypto_id": crypto_id, "transaction_type": transaction_type, "amount":amount})
+    session.commit()
+    
+    return jsonify({"message": "Transaction successfully"}), 200
+
+
 #-----
 
 app.run()
