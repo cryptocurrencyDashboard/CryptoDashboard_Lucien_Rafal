@@ -3,7 +3,7 @@
 ### Option1: Docker 
 
 
-**To user mysql container **
+**To user mysql container**
 - first check the name of your mysql container name by running `docker ps`
 <img width="1268" alt="Screenshot 2024-08-18 at 10 03 58" src="https://github.com/user-attachments/assets/ef627e0e-6986-4770-bb7b-cf68a79133dc">
 - run `docker exec -it mysql_container mysql -u root -p` remember to replace `mysql_container` if you have customised container name. 
