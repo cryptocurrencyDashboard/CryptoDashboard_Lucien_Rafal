@@ -12,20 +12,13 @@
 - In Swagger you can find the structure of APIs endpoint
 - if your application is running on http://127.0.0.1:5001.  Go to your browser and enter `http://127.0.0.1:5001/apidocs/` in the url bar
 
-**To user mysql container**
+**Access MySQL database**
 - first check the name of your mysql container name by running `docker ps`
 <img width="1268" alt="Screenshot 2024-08-18 at 10 03 58" src="https://github.com/user-attachments/assets/ef627e0e-6986-4770-bb7b-cf68a79133dc">
 - run `docker exec -it mysql_container mysql -u root -p` remember to replace `mysql_container` if you have customised container name. 
 
 
-**Build 
-
-
-
-
-
-------
-### <without Docker>
+### Option2: Without Docker and build your own enviornment in local machine
 
 -  pull this github repo to your local machine `git clone https://github.com/cryptocurrencyDashboard/CryptoDashboard_Lucien_Rafal.git`
    
@@ -41,8 +34,6 @@
 - You should now have `venv` folder in your root directory
 
 **3. Set up environment creditial: Copy`.env_example ` to `.env` file to store apikey and apisecret**
-
-
 - on your project root director, Copy `.env_example` to `.env`.
 -  Fill in your own credentials in the `.env` file.
 - **Important**: The api-key and secret should NEVER upload to the github or commit. it can only exist in your local environment.  To ensure apikey doesn't upload to github. you should see an `.gitignore` file on your root directory.  Everything mentioned in this file WON"T be upload to github nor in git commit history.  so if you see `.env` written in the `.gitignore` file then you are safe 
