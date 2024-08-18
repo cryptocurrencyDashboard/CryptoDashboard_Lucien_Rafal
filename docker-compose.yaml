@@ -11,6 +11,7 @@ services:
       MYSQL_PASSWORD: ${MYSQL_PASSWORD}
     volumes:
       - mysql_data:/var/lib/mysql
+      #host: dockerfiling (using name volume. in here mysql_data iit is just reference could be a random name )
     networks:
       - backend
     healthcheck:
