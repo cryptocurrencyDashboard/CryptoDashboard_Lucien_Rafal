@@ -45,7 +45,7 @@ df = df[['symbol', 'name', 'current_price']]
 #--------------------------------------------------------------------------------------------------------------------
 # SQLAchemy engine create all the tables and store in Mysql
 
-DATABASE_URL = f"mysql+pymysql://{username}:{password}@localhost/crypto_data"
+DATABASE_URL = f"mysql+pymysql://{username}:{password}@db/{os.getenv('MYSQL_DATABASE')}"
 engine = create_engine(DATABASE_URL)
  
 create_table_query = """
@@ -412,7 +412,8 @@ def coin_transactions():
 
 #-----
 
-app.run()
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", port=5001)
 
 session.close()
 print(df) 
