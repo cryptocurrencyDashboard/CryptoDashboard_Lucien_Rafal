@@ -1,8 +1,16 @@
 ## How to start 
 
 ### Option1: Docker 
+**prerequisites: you should have `docker` installed in your local machiine** 
+- pull this github repo to your local machine `git clone https://github.com/cryptocurrencyDashboard/CryptoDashboard_Lucien_Rafal.git`
+- In the command line, direct to the project directory and run `cp .env_example .env` to duplicate .env_example and rename the duplicate file to ".env"
+- Enter all required creditial in .env file (except "MYSQL_DATABASE=crypto_data" which do not need to change)
+- run `docker-compose -f docker-compose.yaml up` on your terminal
+- The application should be up and running!
 
-**Pull image and set environment variable? 
+**Access Swagger**
+- In Swagger you can find the structure of APIs endpoint
+- if your application is running on http://127.0.0.1:5001.  Go to your browser and enter `http://127.0.0.1:5001/apidocs/` in the url bar
 
 **To user mysql container**
 - first check the name of your mysql container name by running `docker ps`
