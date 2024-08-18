@@ -14,6 +14,14 @@ pipeline {
             }
         }
 
+        stage('Check Docker Installation') {
+            steps {
+                script {
+                    sh 'docker --version'
+                }
+            }
+        }
+
         stage('Build Docker Image') {
             steps {
                 script {
@@ -21,6 +29,7 @@ pipeline {
                 }
             }
         }
+        
 
         stage('Push Docker Image') {
             steps {
