@@ -1,6 +1,6 @@
 ## How to start 
 
-### <Docker> 
+### Option1: Docker 
 
 
 **To user mysql container **
