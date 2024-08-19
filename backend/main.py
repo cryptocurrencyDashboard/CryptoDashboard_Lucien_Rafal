@@ -346,8 +346,8 @@ def update_user_by_id(id):
     
     return jsonify({"message": "User data updated successfully"}), 200
 
-#-----
-# ----- rafal code 16.08
+#---------------------
+# -------------------- rafal code 16.08
 @app.route("/user/delete/<int:id>/", methods=["DELETE"])
 def delete_user_by_id(id):
     # Check if user exists
@@ -393,7 +393,6 @@ def get_user_by_id(id):
 def coin_transactions():
   
     data = request.get_json()
-
     user_id = data.get("user_id") 
     crypto_id = data.get("crypto_id") 
     transaction_type = data.get("transaction_type") 
@@ -410,8 +409,7 @@ def coin_transactions():
     return jsonify({"message": "Transaction successfully"}), 200
 
 
-#-----
-
+#-----------------------------------------------------------------------------------------
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5001)
 
