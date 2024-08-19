@@ -10,11 +10,17 @@ import pymysql
 
 #--------------------------------------------------------------------------------------------------------------------
 #.env setup 
-load_dotenv()
+load_dotenv('../.env')
+
 api_key = os.getenv("BINANCE_API_KEY")
 api_secret = os.getenv("BINANCE_SECRET_KEY")
 username = os.getenv("MYSQL_USERNAME")
 password = os.getenv("MYSQL_PASSWORD")
+
+print(f"BINANCE_API_KEY: {os.getenv('BINANCE_API_KEY')}")
+print(f"MYSQL_USERNAME: {os.getenv('MYSQL_USERNAME')}")
+print(f"MYSQL_PASSWORD: {os.getenv('MYSQL_PASSWORD')}")
+print(f"MYSQL_DATABASE: {os.getenv('MYSQL_DATABASE')}")
 
 client = Client(api_key, api_secret)
 app = Flask(__name__)
@@ -44,7 +50,7 @@ df = df[['symbol', 'name', 'current_price']]
 
 #--------------------------------------------------------------------------------------------------------------------
 # SQLAchemy engine create all the tables and store in Mysql
-
+#DATABASE_URL = "mysql+pymysql://root:root@db/crypto_data"
 DATABASE_URL = f"mysql+pymysql://{username}:{password}@db/{os.getenv('MYSQL_DATABASE')}"
 engine = create_engine(DATABASE_URL)
  
