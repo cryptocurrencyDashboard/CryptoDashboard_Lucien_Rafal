@@ -350,6 +350,36 @@ def update_user_by_id(id):
 # -------------------- rafal code 16.08
 @app.route("/user/delete/<int:id>/", methods=["DELETE"])
 def delete_user_by_id(id):
+    """
+    Delete a user by ID
+    ---
+    tags:
+      - User
+    parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        description: The ID of the user to delete
+    responses:
+      200:
+        description: User deleted successfully
+        schema:
+          type: object
+          properties:
+            message:
+              type: string
+              example: User deleted successfully
+      404:
+        description: User not found
+        schema:
+          type: object
+          properties:
+            error:
+              type: string
+              example: User not found
+    """
     # Check if user exists
     existing_user = session.execute(
         text("SELECT * FROM user WHERE user_id=:id"),
@@ -368,6 +398,39 @@ def delete_user_by_id(id):
 
 @app.route("/user/<int:id>/", methods=["GET"])
 def get_user_by_id(id):
+    """
+    Get user information by ID
+    ---
+    tags:
+      - User
+    parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        description: The ID of the user to retrieve
+    responses:
+      200:
+        description: User information retrieved successfully
+        schema:
+          type: object
+          properties:
+            id:
+              type: integer
+            username:
+              type: string
+            email:
+              type: string
+      404:
+        description: User not found
+        schema:
+          type: object
+          properties:
+            error:
+              type: string
+              example: User not found
+    """
     # Check if user exists
     existing_user = session.execute(
         text("SELECT * FROM user WHERE user_id=:id"),
@@ -391,6 +454,54 @@ def get_user_by_id(id):
 
 @app.route("/transactions/", methods=["POST"])
 def coin_transactions():
+    """
+    Create a new transaction
+    ---
+    tags:
+      - Transactions
+    parameters:
+      - in: body
+        name: body
+        schema:
+          id: Transaction
+          required:
+            - user_id
+            - crypto_id
+            - transaction_type
+            - amount
+          properties:
+            user_id:
+              type: integer
+              description: The ID of the user making the transaction
+            crypto_id:
+              type: integer
+              description: The ID of the cryptocurrency
+            transaction_type:
+              type: string
+              enum: ['buy', 'sell']
+              description: Type of the transaction (buy or sell)
+            amount:
+              type: number
+              format: decimal
+              description: Amount of cryptocurrency involved in the transaction
+    responses:
+      200:
+        description: Transaction successfully created
+        schema:
+          type: object
+          properties:
+            message:
+              type: string
+              example: Transaction successfully created
+      400:
+        description: Invalid input or transaction error
+        schema:
+          type: object
+          properties:
+            error:
+              type: string
+              example: Error message
+    """
   
     data = request.get_json()
     user_id = data.get("user_id") 
@@ -410,6 +521,49 @@ def coin_transactions():
 
 @app.route("/transactions/<int:id>/", methods=["GET"])
 def get_transaction_by_id(id):
+    """
+    Get all transactions for a user by ID
+    ---
+    tags:
+      - Transactions
+    parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        description: The ID of the user whose transactions to retrieve
+    responses:
+      200:
+        description: List of transactions retrieved successfully
+        schema:
+          type: array
+          items:
+            type: object
+            properties:
+              symbol:
+                type: string
+              transaction_type:
+                type: string
+                enum: ['buy', 'sell']
+              amount:
+                type: number
+                format: decimal
+              price_at_transaction:
+                type: number
+                format: decimal
+              transaction_date:
+                type: string
+                format: date-time
+      404:
+        description: User not found
+        schema:
+          type: object
+          properties:
+            error:
+              type: string
+              example: User not found
+    """
     # Check if user exists
     existing_user = session.execute(
         text("SELECT * FROM user WHERE user_id=:id"),
@@ -447,6 +601,43 @@ def get_transaction_by_id(id):
 
 @app.route("/portfolio/<int:id>/", methods=["GET"])
 def get_portfolio_by_id(id):
+    """
+    Get the portfolio for a user by ID
+    ---
+    tags:
+      - Portfolio
+    parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        description: The ID of the user whose portfolio to retrieve
+    responses:
+      200:
+        description: Portfolio retrieved successfully
+        schema:
+          type: array
+          items:
+            type: object
+            properties:
+              symbol:
+                type: string
+              amount:
+                type: number
+                format: decimal
+              total_value:
+                type: number
+                format: decimal
+      404:
+        description: User not found
+        schema:
+          type: object
+          properties:
+            error:
+              type: string
+              example: User not found
+    """
     # Check if user exists
     existing_user = session.execute(
         text("SELECT * FROM user WHERE user_id=:id"),
