@@ -168,18 +168,6 @@ END;
 
 """
 
-
-# with engine.connect() as connection:
-#     connection.execute(text(create_table_query))
-#     connection.execute(text(create_user_table))
-#     connection.execute(text(create_transactions_table))
-#     connection.execute(text(drop_before_insert_trigger))
-#     connection.execute(text(drop_after_insert_trigger))
-#     connection.execute(text(create_before_insert_transaction_trigger))
-#     connection.execute(text(create_portfolio_table))
-#     connection.execute(text(create_after_insert_transaction_trigger))
-
-
 connection = engine.raw_connection()
 try:
     cursor = connection.cursor()
@@ -196,10 +184,6 @@ finally:
     cursor.close()
     connection.close()
 
-
-
-
-    
 df.to_sql('crypto_prices', con=engine, if_exists='append', index=False)
 
 
