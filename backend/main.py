@@ -408,7 +408,75 @@ def coin_transactions():
     
     return jsonify({"message": "Transaction successfully"}), 200
 
+@app.route("/transactions/<int:id>/", methods=["GET"])
+def get_transaction_by_id(id):
+    # Check if user exists
+    existing_user = session.execute(
+        text("SELECT * FROM user WHERE user_id=:id"),
+        {"id": id}
+    ).fetchone()
+    
+    if not existing_user:
+        return jsonify({"error": "User not found"}), 404
 
+    transaction_query = text("""
+    SELECT c.symbol, t.transaction_type, t.amount, t.price_at_transaction, t.transaction_date 
+    FROM transactions t 
+    JOIN crypto_prices c ON c.crypto_id = t.crypto_id 
+    WHERE t.user_id = :id
+    """)
+    transactions = session.execute(transaction_query, {"id": id}).fetchall()
+
+    transaction_history = [
+        {
+            "symbol": transaction.symbol, 
+            "transaction_type": transaction.transaction_type,
+            "amount": float(transaction.amount), 
+            "price_at_transaction": float(transaction.price_at_transaction),
+            "transaction_date": transaction.transaction_date.strftime("%Y-%m-%d %H:%M:%S")
+        } 
+
+
+        for transaction in transactions
+    ]
+        
+    return jsonify(transaction_history), 200
+
+
+
+
+@app.route("/portfolio/<int:id>/", methods=["GET"])
+def get_portfolio_by_id(id):
+    # Check if user exists
+    existing_user = session.execute(
+        text("SELECT * FROM user WHERE user_id=:id"),
+        {"id": id}
+    ).fetchone()
+    
+    if not existing_user:
+        return jsonify({"error": "User not found"}), 404
+
+    portfolio_query = text("""
+    SELECT c.symbol, p.amount, p.total_value
+    FROM portfolio p 
+    JOIN crypto_prices c ON c.crypto_id = p.crypto_id 
+    WHERE p.user_id = :id
+    """)
+    transactions = session.execute(portfolio_query, {"id": id}).fetchall()
+
+    transaction_history = [
+        {
+            "symbol": transaction.symbol, 
+            "amount": float(transaction.amount),
+            "total_value": float(transaction.total_value)
+      
+        } 
+
+
+        for transaction in transactions
+    ]
+        
+    return jsonify(transaction_history), 200
 #-----------------------------------------------------------------------------------------
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5001)
