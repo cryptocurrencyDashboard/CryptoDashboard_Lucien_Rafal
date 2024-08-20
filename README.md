@@ -30,7 +30,7 @@ Authentication
 
 
 ## Dockerhub Image location
-search `luciensday/crypto_dashboard`
+search `luciensday/crypto_dashboard` on Dockerhub
   
 
 ## Base URL 
