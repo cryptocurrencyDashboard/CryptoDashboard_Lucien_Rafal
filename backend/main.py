@@ -2,13 +2,14 @@ from dotenv import load_dotenv
 import os 
 from binance.client import Client
 import pandas as pd
-from sqlalchemy import create_engine, text   # Import the create_engine function
+from sqlalchemy import create_engine, text 
 from sqlalchemy.orm import sessionmaker
 from flask import Flask,jsonify,request
 from flasgger import Swagger
 import pymysql
 
 #--------------------------------------------------------------------------------------------------------------------
+# => Lucien
 #.env setup 
 load_dotenv('../.env')
 
@@ -17,17 +18,12 @@ api_secret = os.getenv("BINANCE_SECRET_KEY")
 username = os.getenv("MYSQL_USERNAME")
 password = os.getenv("MYSQL_PASSWORD")
 
-print(f"BINANCE_API_KEY: {os.getenv('BINANCE_API_KEY')}")
-print(f"MYSQL_USERNAME: {os.getenv('MYSQL_USERNAME')}")
-print(f"MYSQL_PASSWORD: {os.getenv('MYSQL_PASSWORD')}")
-print(f"MYSQL_DATABASE: {os.getenv('MYSQL_DATABASE')}")
-
 client = Client(api_key, api_secret)
 app = Flask(__name__)
 swagger = Swagger(app)
 
-
 #--------------------------------------------------------------------------------------------------------------------
+# => Lucien
 #prepare "crypto_prices" table data (using pandas)
 
 coins = ('BTCUSDT', 'ETHUSDT', 'BNBUSDT', 'SOLUSDT', 'ADAUSDT', 'XRPUSDT', 
@@ -35,12 +31,14 @@ coins = ('BTCUSDT', 'ETHUSDT', 'BNBUSDT', 'SOLUSDT', 'ADAUSDT', 'XRPUSDT',
          'MATICUSDT', 'LTCUSDT', 'UNIUSDT', 'ALGOUSDT', 'TRXUSDT', 
          'LINKUSDT', 'MANAUSDT', 'ATOMUSDT', 'VETUSDT')
 prices = []
+
 for coin in coins:
     price_data = client.get_symbol_ticker(symbol=coin)
     prices.append({
         'symbol': price_data['symbol'],
         'current_price': float(price_data['price'])
     })
+
 df = pd.DataFrame(prices)
 df['name'] = ['Bitcoin', 'Ethereum', 'Binance Coin', 'Solana', 'Cardano', 'XRP', 
               'Polkadot', 'Luna', 'Dogecoin', 'Avalanche', 'Shiba Inu', 
@@ -49,8 +47,9 @@ df['name'] = ['Bitcoin', 'Ethereum', 'Binance Coin', 'Solana', 'Cardano', 'XRP',
 df = df[['symbol', 'name', 'current_price']]
 
 #--------------------------------------------------------------------------------------------------------------------
+# => Lucien
 # SQLAchemy engine create all the tables and store in Mysql
-#DATABASE_URL = "mysql+pymysql://root:root@db/crypto_data"
+
 DATABASE_URL = f"mysql+pymysql://{username}:{password}@db/{os.getenv('MYSQL_DATABASE')}"
 engine = create_engine(DATABASE_URL)
  
@@ -71,7 +70,6 @@ CREATE TABLE IF NOT EXISTS user (
     created_at DATETIME
 );
 """
-
 create_transactions_table = """
     CREATE TABLE IF NOT EXISTS transactions (
     transaction_id INT PRIMARY KEY AUTO_INCREMENT,
@@ -90,7 +88,6 @@ drop_before_insert_trigger = "DROP TRIGGER IF EXISTS before_insert_transaction;"
 drop_after_insert_trigger = "DROP TRIGGER IF EXISTS after_insert_transaction;"
 
 create_before_insert_transaction_trigger = """
-
 CREATE TRIGGER before_insert_transaction
 BEFORE INSERT ON transactions
 FOR EACH ROW
@@ -119,8 +116,6 @@ CREATE TABLE IF NOT EXISTS portfolio (
 """
 
 create_after_insert_transaction_trigger = """
-
-
 CREATE TRIGGER after_insert_transaction
 AFTER INSERT ON transactions
 FOR EACH ROW
@@ -135,7 +130,6 @@ BEGIN
         SET adjusted_amount = -NEW.amount; 
     END IF;
 
-
     IF EXISTS (SELECT 1 FROM portfolio WHERE user_id = NEW.user_id AND crypto_id = NEW.crypto_id) THEN
     
         SELECT amount + adjusted_amount
@@ -143,7 +137,6 @@ BEGIN
         FROM portfolio
         WHERE user_id = NEW.user_id AND crypto_id = NEW.crypto_id;
 
-   
         IF new_amount < 0 THEN
             SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Insufficient holdings: transaction would result in negative balance';
         ELSE
@@ -188,13 +181,13 @@ df.to_sql('crypto_prices', con=engine, if_exists='append', index=False)
 
 
 #--------------------------------------------------------------------------------------------------------------------
+# Rafal 
 # Flask session create end point
 
 Session = sessionmaker(bind=engine)
 session = Session()
 
 def insertData(name, password, email):
-   
     sql_query = text("INSERT INTO user (username, password, email) VALUES (:username, :password, :email)")
     session.execute(sql_query, {"username": name, "password": password, "email": email})
     session.commit()
@@ -236,7 +229,6 @@ def create_user():
     insertData(username, password, email)
     print(data)
     return "data added",200
-
 
 
 @app.route("/user/update/<int:id>/", methods=["PUT"])
@@ -336,8 +328,7 @@ def update_user_by_id(id):
     
     return jsonify({"message": "User data updated successfully"}), 200
 
-#---------------------
-# -------------------- rafal code 16.08
+
 @app.route("/user/delete/<int:id>/", methods=["DELETE"])
 def delete_user_by_id(id):
     """
@@ -370,7 +361,7 @@ def delete_user_by_id(id):
               type: string
               example: User not found
     """
-    # Check if user exists
+
     existing_user = session.execute(
         text("SELECT * FROM user WHERE user_id=:id"),
         {"id": id}
@@ -421,7 +412,6 @@ def get_user_by_id(id):
               type: string
               example: User not found
     """
-    # Check if user exists
     existing_user = session.execute(
         text("SELECT * FROM user WHERE user_id=:id"),
         {"id": id}
@@ -439,7 +429,6 @@ def get_user_by_id(id):
     }
 
     return jsonify(user_data), 200
-
 
 
 @app.route("/transactions/", methods=["POST"])
@@ -492,22 +481,19 @@ def coin_transactions():
               type: string
               example: Error message
     """
-  
     data = request.get_json()
     user_id = data.get("user_id") 
     crypto_id = data.get("crypto_id") 
     transaction_type = data.get("transaction_type") 
     amount = data.get("amount") 
 
-    
     transaction_query = text("INSERT INTO transactions (user_id, crypto_id, transaction_type, amount) VALUES (:user_id, :crypto_id, :transaction_type, :amount)"
-  
     )
   
     session.execute(transaction_query, {"user_id": user_id , "crypto_id": crypto_id, "transaction_type": transaction_type, "amount":amount})
     session.commit()
-    
     return jsonify({"message": "Transaction successfully"}), 200
+
 
 @app.route("/transactions/<int:id>/", methods=["GET"])
 def get_transaction_by_id(id):
@@ -554,7 +540,6 @@ def get_transaction_by_id(id):
               type: string
               example: User not found
     """
-    # Check if user exists
     existing_user = session.execute(
         text("SELECT * FROM user WHERE user_id=:id"),
         {"id": id}
@@ -579,14 +564,9 @@ def get_transaction_by_id(id):
             "price_at_transaction": float(transaction.price_at_transaction),
             "transaction_date": transaction.transaction_date.strftime("%Y-%m-%d %H:%M:%S")
         } 
-
-
         for transaction in transactions
     ]
-        
     return jsonify(transaction_history), 200
-
-
 
 
 @app.route("/portfolio/<int:id>/", methods=["GET"])
@@ -628,7 +608,6 @@ def get_portfolio_by_id(id):
               type: string
               example: User not found
     """
-    # Check if user exists
     existing_user = session.execute(
         text("SELECT * FROM user WHERE user_id=:id"),
         {"id": id}
@@ -650,18 +629,16 @@ def get_portfolio_by_id(id):
             "symbol": transaction.symbol, 
             "amount": float(transaction.amount),
             "total_value": float(transaction.total_value)
-      
         } 
-
-
         for transaction in transactions
     ]
-        
     return jsonify(transaction_history), 200
+
+
 #-----------------------------------------------------------------------------------------
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5001)
 
 session.close()
-print(df) 
+
 
