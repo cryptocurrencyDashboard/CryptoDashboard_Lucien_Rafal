@@ -38,6 +38,7 @@ http://localhost:5001/
 ### User Management 
 
 
+
 #### 1. Register a New User
 
 **Endpoint:** `/user/register`
@@ -59,6 +60,8 @@ http://localhost:5001/
 **Responses:**
 200 OK: User successfully registered.
 400 Bad Request: Invalid input.
+
+
 
 
 #### 2. Update User Information
@@ -84,6 +87,8 @@ http://localhost:5001/
 200 OK: User data updated successfully.
 400 Bad Request: No valid fields to update or invalid input.
 404 Not Found: User not found.
+
+
 
 
 #### 3. Delete User
