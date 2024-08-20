@@ -187,25 +187,22 @@ http://localhost:5001/
 400 Bad Request: Indicates that the server could not understand the request due to invalid syntax or missing required fields.
 404 Not Found: The requested resource could not be found, typically when a user ID or transaction ID does not exist.
 
-## Backend EndPoint
+## Endpooint and tables
 
-| endPoint       | type   | table used                         | details                                                                                    |
+| endPoint       | type   | tables used                         | details                                                                                    |
 | -------------- | ------ | ---------------------------------- | ------------------------------------------------------------------------------------------ |
-| /user/register | POST   | User                               | user enter the username, password...etc                                                    |
-| /user/edit/{id}     | PUT    | User                               | edit the user information                                                                  |
-| /user/delete/{id}     | DELETE | User                               | delete user                                                                                |
-| /user          | GET    | User                               | get all the user                                                                           |
+| /user/register | POST   | User                               | User enter the username, password...etc                                                    |
+| /user/edit/{id}     | PUT    | User                               | Edit the user information                                                                  |
+| /user/delete/{id}     | DELETE | User                               | Delete user                                                                                |
+| /user          | GET    | User                               | Get all the user                                                                           |
 | /transactions         | POST   | transactions, portfolio, crypto_price, User | Enter coin, type of trade amount to create the transaction. Result will be save to Holding |
-| /transaction/{id} |GET    |transactions, crypto_price | user can view their transaction history |
-| /portfolio     | GET    | portfolio, crypto_price, user                           | Get the current holding                                                                    |
+| /transactions/{id} |GET    |transactions, crypto_price | user can view their transaction history |
+| /portfolio/{id{     | GET    | portfolio, crypto_price, user                           | Get the current holding by user id                                                                    |
 
 
 
 <img width="750" alt="Screenshot 2024-08-15 at 22 24 24" src="https://github.com/user-attachments/assets/feec6d6e-1062-4030-ac70-d8b5495a9d12">
 
 
-## User Story
 
-## Trigger
 
-## endpoint result and parameters (check other api documentation sample)
