@@ -21,10 +21,10 @@ Authentication
 - if your application is running on http://127.0.0.1:5001.  Go to your browser and enter `http://127.0.0.1:5001/apidocs/` in the url bar
 
 **Access MySQL database command line or MySQL Workbench**
-_Option1: Using mySQL Workbench_
+_Optionv1: Using mySQL Workbench_
 - open mySQL Workbench and add port `127.0.0.1.3307` 
 
-_Option1: Using mySQL command line_
+_Option 2: Using mySQL command line_
 - run `docker exec -it mysql_container mysql -u root -p` on the terminal
 
 
