@@ -20,13 +20,12 @@ Authentication
 - In Swagger you can find the structure of APIs endpoint
 - if your application is running on http://127.0.0.1:5001.  Go to your browser and enter `http://127.0.0.1:5001/apidocs/` in the url bar
 
-**Access MySQL database**
-- first check the name of your mysql container name by running `docker ps`
-  
-<img width="1268" alt="Screenshot 2024-08-18 at 10 03 58" src="https://github.com/user-attachments/assets/ef627e0e-6986-4770-bb7b-cf68a79133dc">
+**Access MySQL database command line or MySQL Workbench**
+_Option1: Using mySQL Workbench_
+- open mySQL Workbench and add port `127.0.0.1.3307` 
 
-
-- run `docker exec -it mysql_container mysql -u root -p` remember to replace `mysql_container` if you have customised container name.
+_Option1: Using mySQL command line_
+- run `docker exec -it mysql_container mysql -u root -p` on the terminal
 
 
 ## Dockerhub Image location
