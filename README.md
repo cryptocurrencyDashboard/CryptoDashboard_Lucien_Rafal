@@ -38,10 +38,15 @@ http://localhost:5001/
 
 1. User Managemen
 Register a New User
-**Endpoint:** `/user/register` /n
+
+**Endpoint:** `/user/register`
+
 **Method:** `POST`
+
 **Description:** Registers a new user.
+
 **Request Body:**
+
 ```json
 {
   "username": "string",
@@ -49,6 +54,7 @@ Register a New User
   "email": "string"
 }
 ```
+
 **Responses:**
 200 OK: User successfully registered.
 400 Bad Request: Invalid input.
