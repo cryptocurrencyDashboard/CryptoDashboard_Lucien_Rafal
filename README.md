@@ -1,7 +1,15 @@
+
+## Introduction
+
+This API provides endpoints to manage users, perform cryptocurrency transactions, and retrieve user portfolios. It interacts with the Binance API for current cryptocurrency prices and uses MySQL for data storage. The API is designed to support user registration, updates, deletion, and management of transactions and portfolios.
+Authentication
+
+
+
 ## How to start 
 
-### Option1: Docker 
 **prerequisites: you should have `docker` installed in your local machiine** 
+
 - pull this github repo to your local machine `git clone https://github.com/cryptocurrencyDashboard/CryptoDashboard_Lucien_Rafal.git`
 - In the command line, direct to the project directory and run `cp .env_example .env` to duplicate .env_example and rename the duplicate file to ".env"
 - Enter all required creditial in .env file (except "MYSQL_DATABASE=crypto_data" which do not need to change)
@@ -19,32 +27,106 @@
 - run `docker exec -it mysql_container mysql -u root -p` remember to replace `mysql_container` if you have customised container name. 
 
 
-### Option2: Without Docker and build your own enviornment in local machine
 
--  pull this github repo to your local machine `git clone https://github.com/cryptocurrencyDashboard/CryptoDashboard_Lucien_Rafal.git`
-   
-**1. Set up Environemnt on VS code**
--  Open it with Visual Studio Code. (terminal need to be in the project root directory).  Set up the enviornment `python3 -m venv venv`
--  VS studio code will prompt if you want to create a venv2934 file. click `yes`
--  Activate the environment `source venv/bin/activate`
-- To check if the envornment is activate - you can see (venv) in your terminal prompt as per below image
-<img width="398" alt="Screenshot 2024-08-14 at 09 52 08" src="https://github.com/user-attachments/assets/6e66d5b0-8fc1-4a79-8fb7-bf3634492a0b">
 
-**2. install dependancies from requirement.txt**
-- once environment activated, install all dependancies mentioned in `requirement.txt` by running ` pip3 install -r requirements.txt`
-- You should now have `venv` folder in your root directory
 
-**3. Set up environment creditial: Copy`.env_example ` to `.env` file to store apikey and apisecret**
-- on your project root director, Copy `.env_example` to `.env`.
--  Fill in your own credentials in the `.env` file.
-- **Important**: The api-key and secret should NEVER upload to the github or commit. it can only exist in your local environment.  To ensure apikey doesn't upload to github. you should see an `.gitignore` file on your root directory.  Everything mentioned in this file WON"T be upload to github nor in git commit history.  so if you see `.env` written in the `.gitignore` file then you are safe 
+arduino
+Copy code
+http://localhost:5001/
+## Endpoints
 
-**4. Run the program**
-- on the project root directory. run in terminal `python3 backend/main.py`
+1. User Management
+Register a New User
+Endpoint: `/user/register`
+Method: `POST`
+Description: Registers a new user.
+Request Body:
+```json
+{
+  "username": "string",
+  "password": "string",
+  "email": "string"
+}
+```
+Responses:
+200 OK: User successfully registered.
+400 Bad Request: Invalid input.
+Update User Information
+Endpoint: /user/update/<int:id>/
+Method: PUT
+Description: Updates the user information based on user ID.
+Path Parameters:
+id: The ID of the user to update.
+Request Body (optional fields):
+json
+Copy code
+{
+  "username": "string",
+  "password": "string",
+  "email": "string"
+}
+Responses:
+200 OK: User data updated successfully.
+400 Bad Request: No valid fields to update or invalid input.
+404 Not Found: User not found.
+Delete User
+Endpoint: /user/delete/<int:id>/
+Method: DELETE
+Description: Deletes a user based on the user ID.
+Path Parameters:
+id: The ID of the user to delete.
+Responses:
+200 OK: User deleted successfully.
+404 Not Found: User not found.
+Get User Information
+Endpoint: /user/<int:id>/
+Method: GET
+Description: Retrieves information of a user by their ID.
+Path Parameters:
+id: The ID of the user to retrieve.
+Responses:
+200 OK: User information retrieved successfully.
+404 Not Found: User not found.
+2. Transaction Management
+Create a New Transaction
+Endpoint: /transactions/
+Method: POST
+Description: Creates a new cryptocurrency transaction (buy or sell).
+Request Body:
+json
+Copy code
+{
+  "user_id": "integer",
+  "crypto_id": "integer",
+  "transaction_type": "string",
+  "amount": "decimal"
+}
+Responses:
+200 OK: Transaction successfully created.
+400 Bad Request: Invalid input or transaction error.
+Get Transactions by User ID
+Endpoint: /transactions/<int:id>/
+Method: GET
+Description: Retrieves all transactions for a user by their ID.
+Path Parameters:
+id: The ID of the user whose transactions to retrieve.
+Responses:
+200 OK: List of transactions retrieved successfully.
+404 Not Found: User not found.
+3. Portfolio Management
+Get Portfolio by User ID
+Endpoint: /portfolio/<int:id>/
+Method: GET
+Description: Retrieves the cryptocurrency portfolio for a user by their ID.
+Path Parameters:
+id: The ID of the user whose portfolio to retrieve.
+Responses:
+200 OK: Portfolio retrieved successfully.
+404 Not Found: User not found.
+Error Handling
 
-**5.Before push your code to github**
-- run `pip3 freeze > requirements.txt` to update requirements.txt file (so your new added dependencies are in the files"
-
+400 Bad Request: Indicates that the server could not understand the request due to invalid syntax or missing required fields.
+404 Not Found: The requested resource could not be found, typically when a user ID or transaction ID does not exist.
 
 ## Backend EndPoint
 
