@@ -11,14 +11,6 @@ services:
 
       MYSQL_DATABASE: ${MYSQL_DATABASE}
 
-      # Remove MYSQL_USER and MYSQL_PASSWORD if only using root
-
-      # Uncomment and set these if you need a non-root user
-
-      # MYSQL_USER: ${MYSQL_NON_ROOT_USERNAME}
-
-      # MYSQL_PASSWORD: ${MYSQL_NON_ROOT_PASSWORD}
-
     volumes:
       - mysql_data:/var/lib/mysql
 
@@ -44,9 +36,9 @@ services:
 
       - BINANCE_SECRET_KEY=${BINANCE_SECRET_KEY}
 
-      - MYSQL_USERNAME=${MYSQL_USERNAME} # Use the non-root username or root if intended
+      - MYSQL_USERNAME=${MYSQL_USERNAME}
 
-      - MYSQL_PASSWORD=${MYSQL_PASSWORD} # Use the corresponding password
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
 
       - MYSQL_DATABASE=${MYSQL_DATABASE}
 
