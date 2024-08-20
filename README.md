@@ -27,6 +27,10 @@ Authentication
 
 
 - run `docker exec -it mysql_container mysql -u root -p` remember to replace `mysql_container` if you have customised container name.
+
+
+## Dockerhub Image location
+search `luciensday/crypto_dashboard`
   
 
 ## Base URL 
