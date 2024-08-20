@@ -22,25 +22,25 @@ Authentication
 
 **Access MySQL database**
 - first check the name of your mysql container name by running `docker ps`
+  
 <img width="1268" alt="Screenshot 2024-08-18 at 10 03 58" src="https://github.com/user-attachments/assets/ef627e0e-6986-4770-bb7b-cf68a79133dc">
 
-- run `docker exec -it mysql_container mysql -u root -p` remember to replace `mysql_container` if you have customised container name. 
+- run `docker exec -it mysql_container mysql -u root -p` remember to replace `mysql_container` if you have customised container name.
+  
 
+## Base URL 
 
-
-
-
-arduino
-Copy code
+```arduino
 http://localhost:5001/
+```
 ## Endpoints
 
 1. User Management
 Register a New User
-Endpoint: `/user/register`
-Method: `POST`
-Description: Registers a new user.
-Request Body:
+**Endpoint:** `/user/register`
+**Method:** `POST`
+**Description:** Registers a new user.
+**Request Body:**
 ```json
 {
   "username": "string",
@@ -48,28 +48,30 @@ Request Body:
   "email": "string"
 }
 ```
-Responses:
+**Responses:**
 200 OK: User successfully registered.
 400 Bad Request: Invalid input.
-Update User Information
-Endpoint: /user/update/<int:id>/
-Method: PUT
-Description: Updates the user information based on user ID.
-Path Parameters:
-id: The ID of the user to update.
-Request Body (optional fields):
-json
-Copy code
+
+2. Update User Information
+**Endpoint:** `/user/update/<int:id>/`
+**Method:** `PUT`
+**Description:** Updates the user information based on user ID.
+**Path Parameters:**
+**id:** The ID of the user to update.
+**Request Body (optional fields):**
+```json
 {
   "username": "string",
   "password": "string",
   "email": "string"
 }
-Responses:
+```
+**Responses:**
 200 OK: User data updated successfully.
 400 Bad Request: No valid fields to update or invalid input.
 404 Not Found: User not found.
-Delete User
+
+3. Delete User
 Endpoint: /user/delete/<int:id>/
 Method: DELETE
 Description: Deletes a user based on the user ID.
