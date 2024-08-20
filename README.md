@@ -38,7 +38,7 @@ http://localhost:5001/
 
 1. User Managemen
 Register a New User
-**Endpoint:** `/user/register`\n
+**Endpoint:** `/user/register` /n
 **Method:** `POST`
 **Description:** Registers a new user.
 **Request Body:**
