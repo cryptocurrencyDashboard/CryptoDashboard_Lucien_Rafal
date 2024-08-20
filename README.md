@@ -34,6 +34,7 @@ Authentication
 http://localhost:5001/
 ```
 ## Endpoints
+### User Management 
 
 1. User Management
 Register a New User
@@ -72,60 +73,67 @@ Register a New User
 404 Not Found: User not found.
 
 3. Delete User
-Endpoint: /user/delete/<int:id>/
-Method: DELETE
-Description: Deletes a user based on the user ID.
-Path Parameters:
-id: The ID of the user to delete.
-Responses:
+**Endpoint:** `/user/delete/<int:id>/`
+**Method:** `DELETE`
+arduino Deletes a user based on the user ID.
+**Path Parameters:**
+**id:** The ID of the user to delete.
+**Responses:**
 200 OK: User deleted successfully.
 404 Not Found: User not found.
-Get User Information
-Endpoint: /user/<int:id>/
-Method: GET
-Description: Retrieves information of a user by their ID.
-Path Parameters:
-id: The ID of the user to retrieve.
-Responses:
+   
+4. Get User Information
+**Endpoint:** `/user/<int:id>/`
+**Method:** GET
+**Description:** Retrieves information of a user by their ID.
+**Path Parameters:**
+**id:** The ID of the user to retrieve.
+**Responses:**
 200 OK: User information retrieved successfully.
 404 Not Found: User not found.
-2. Transaction Management
-Create a New Transaction
-Endpoint: /transactions/
-Method: POST
-Description: Creates a new cryptocurrency transaction (buy or sell).
-Request Body:
-json
-Copy code
+
+### Transaction Management
+1. Create a New Transaction
+**Endpoint:** /transactions/
+**Method:** POST
+**Description:** Creates a new cryptocurrency transaction (buy or sell).
+**Request Body:**
+```json
 {
   "user_id": "integer",
   "crypto_id": "integer",
   "transaction_type": "string",
   "amount": "decimal"
 }
-Responses:
+```
+**Responses:**
 200 OK: Transaction successfully created.
 400 Bad Request: Invalid input or transaction error.
-Get Transactions by User ID
-Endpoint: /transactions/<int:id>/
-Method: GET
-Description: Retrieves all transactions for a user by their ID.
-Path Parameters:
-id: The ID of the user whose transactions to retrieve.
-Responses:
+
+2. Get Transactions by User ID
+**Endpoint:** `/transactions/<int:id>/`
+**Method:** `GET`
+**Description:** Retrieves all transactions for a user by their ID.
+**Path Parameters:**
+**id:** The ID of the user whose transactions to retrieve.
+**Responses:**
 200 OK: List of transactions retrieved successfully.
 404 Not Found: User not found.
-3. Portfolio Management
+   
+### Portfolio Management
 Get Portfolio by User ID
-Endpoint: /portfolio/<int:id>/
-Method: GET
-Description: Retrieves the cryptocurrency portfolio for a user by their ID.
-Path Parameters:
-id: The ID of the user whose portfolio to retrieve.
-Responses:
+**Endpoint:** `/portfolio/<int:id>/`
+**Method:** `GET`
+**Description:** Retrieves the cryptocurrency portfolio for a user by their ID.
+**Path Parameters:**
+**id:** The ID of the user whose portfolio to retrieve.
+**Responses:**
 200 OK: Portfolio retrieved successfully.
 404 Not Found: User not found.
-Error Handling
+
+
+
+## Error Handling
 
 400 Bad Request: Indicates that the server could not understand the request due to invalid syntax or missing required fields.
 404 Not Found: The requested resource could not be found, typically when a user ID or transaction ID does not exist.
