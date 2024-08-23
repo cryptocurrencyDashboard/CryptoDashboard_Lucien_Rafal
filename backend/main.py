@@ -8,8 +8,7 @@ from flask import Flask,jsonify,request
 from flasgger import Swagger
 import pymysql
 
-#----------------`----------------------------------------------------------------------------------------------------
-# => Lucien
+#--------------------------------------------------------------------------------------------------------------------
 #.env setup 
 load_dotenv('../.env')
 
@@ -22,8 +21,8 @@ client = Client(api_key, api_secret)
 app = Flask(__name__)
 swagger = Swagger(app)
 
+
 #--------------------------------------------------------------------------------------------------------------------
-# => Lucien
 #prepare "crypto_prices" table data (using pandas)
 
 coins = ('BTCUSDT', 'ETHUSDT', 'BNBUSDT', 'SOLUSDT', 'ADAUSDT', 'XRPUSDT', 
@@ -46,13 +45,15 @@ df['name'] = ['Bitcoin', 'Ethereum', 'Binance Coin', 'Solana', 'Cardano', 'XRP',
               'Chainlink', 'Decentraland', 'Cosmos', 'VeChain']
 df = df[['symbol', 'name', 'current_price']]
 
+
 #--------------------------------------------------------------------------------------------------------------------
-# => Lucien
 # SQLAchemy engine create all the tables and store in Mysql
 
 DATABASE_URL = f"mysql+pymysql://{username}:{password}@db/{os.getenv('MYSQL_DATABASE')}"
 engine = create_engine(DATABASE_URL)
  
+
+
 create_table_query = """
 CREATE TABLE IF NOT EXISTS crypto_prices (
     crypto_id INT AUTO_INCREMENT PRIMARY KEY,
@@ -181,7 +182,6 @@ df.to_sql('crypto_prices', con=engine, if_exists='append', index=False)
 
 
 #--------------------------------------------------------------------------------------------------------------------
-# Rafal 
 # Flask session create end point
 
 Session = sessionmaker(bind=engine)
